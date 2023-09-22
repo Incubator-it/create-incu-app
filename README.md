@@ -1,3 +1,3 @@
 # Create Incu App 🍃
 
-A CLI based from [create-appncy](https://github.com/goncy/create-appncy) for Incubator's projects.
+A CLI based on [create-appncy](https://github.com/goncy/create-appncy) for Incubator's projects.

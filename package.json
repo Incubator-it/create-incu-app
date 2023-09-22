@@ -2,11 +2,23 @@
   "name": "create-incu-app",
   "version": "1.0.0",
   "description": "Create a new incu app 🍃",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Incubator-it/create-incu-app"
+  },
+  "homepage": "https://github.com/Incubator-it/create-incu-app#readme",
   "main": "index.mjs",
   "bin": {
     "create-incu-app": "index.mjs"
   },
-  "keywords": [],
+  "keywords": [
+    "React",
+    "Vite",
+    "Next",
+    "Incubator",
+    "create",
+    "app"
+  ],
   "author": "Javo",
   "license": "ISC",
   "dependencies": {

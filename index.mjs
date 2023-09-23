@@ -1,13 +1,13 @@
 #!/usr/bin/env node
 
 import path from "node:path";
-import {fileURLToPath} from "node:url";
-import {cp, readFile, writeFile} from "node:fs/promises";
-import {glob} from "glob";
+import { fileURLToPath } from "node:url";
+import { cp, readFile, writeFile } from "node:fs/promises";
+import { glob } from "glob";
 import color from "picocolors";
 import prompts from "prompts";
 import yargs from "yargs";
-import {hideBin} from "yargs/helpers";
+import { hideBin } from "yargs/helpers";
 
 // Specify CLI arguments
 const args = yargs(hideBin(process.argv)).options({
@@ -59,6 +59,10 @@ async function main() {
             title: "Next v13 + Tailwind + ShadcnUI + Formik (with app dir)",
             value: "next-tw-shadcn-formik-app"
           },
+          {
+            title: "React TS + Sass + Mui + Eslint + Prettier + Mobx + Apisauce + Vite",
+            value: "react-mui-eslint-pret-mobx-sauce"
+          }
         ],
       },
     ],
@@ -79,10 +83,10 @@ async function main() {
   const destination = path.join(process.cwd(), project.name);
 
   // Copy files from the template folder to the current directory
-  await cp(template, destination, {recursive: true});
+  await cp(template, destination, { recursive: true });
 
   // Get all files from the destination folder
-  const files = await glob(`**/*`, {nodir: true, cwd: destination, absolute: true});
+  const files = await glob(`**/*`, { nodir: true, cwd: destination, absolute: true });
 
   // Read each file and replace the tokens
   for await (const file of files) {
@@ -96,8 +100,8 @@ async function main() {
   console.log("✨ Project created ✨");
   console.log(`\n${color.yellow(`Next steps:`)}\n`);
   console.log(`${color.green(`cd`)} ${project.name}`);
-  console.log(`${color.green(`yarn`)} install`);
-  console.log(`${color.green(`yarn`)} dev`);
+  console.log(`${color.green(`yarn`)} or ${color.green(`npm i`)}`);
+  console.log(`${color.green(`yarn dev`)} or ${color.green(`npm run dev`)}`);
 }
 
 main().catch(console.error);

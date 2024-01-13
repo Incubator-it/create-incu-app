@@ -47,7 +47,19 @@ var extras = {
   "react-tw-daisyui": [
     {
       title: "Zustand",
-      value: "zustand"
+      value: "zustand",
+      markdown: `
+## With Zustand (Slice pattern)
+
+> [Documentation](https://docs.pmnd.rs/zustand/getting-started/introduction)
+> [Slice Patter](https://docs.pmnd.rs/zustand/guides/slices-pattern)
+
+Install zustand with \`yarn add zustand\` or \`npm install zustand\`.
+
+You can divide your main store intro smaller individual stores to achieve modularity. This is simple to accomplish in Zustand!
+
+View the example in \`src/store\` and \`src/components/DemoZustand.tsx\` to see how it works.
+      `
     },
     {
       title: "MobX",
@@ -129,17 +141,21 @@ async function main() {
     }
   }
   const files = await (0, import_glob.glob)(`**/*`, { nodir: true, cwd: destination, absolute: true });
+  let markdown = "";
+  extras2[project.template].forEach((e) => {
+    if (extrasArr.includes(e.value)) {
+      markdown += e.markdown;
+    }
+  });
   for await (const file of files) {
     const data = await (0, import_promises.readFile)(file, "utf8");
-    const draft = data.replace(/{{name}}/g, project.name);
+    const draft = data.replace(/{{name}}/g, project.name).replace(/{{markdown}}/g, markdown);
     await (0, import_promises.writeFile)(file, draft, "utf8");
   }
   if (extrasArr.length) {
     console.log(
       `
-Check out the ${import_picocolors.default.italic("README.md")} file inside ${import_picocolors.default.green(
-        extrasArr.join(", ")
-      )} for more info on how to use it.`
+Check out the ${import_picocolors.default.italic("README.md")} file inside ${project.name} for more info on how to use it.`
     );
   }
   console.log("\u2728 Project created \u2728");

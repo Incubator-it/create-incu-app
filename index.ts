@@ -100,9 +100,15 @@ async function main() {
   const files = await glob(`**/*`, {nodir: true, cwd: destination, absolute: true});
 
   // Read each file and replace the tokens
+  let markdown = "";
+  extras[project.template].forEach((e) => {
+    if (extrasArr.includes(e.value)) {
+      markdown += e.markdown;
+    }
+  });
   for await (const file of files) {
     const data = await readFile(file, "utf8");
-    const draft = data.replace(/{{name}}/g, project.name);
+    const draft = data.replace(/{{name}}/g, project.name).replace(/{{markdown}}/g, markdown);
 
     await writeFile(file, draft, "utf8");
   }
@@ -110,9 +116,9 @@ async function main() {
   // Extras log
   if (extrasArr.length) {
     console.log(
-      `\nCheck out the ${color.italic("README.md")} file inside ${color.green(
-        extrasArr.join(", "),
-      )} for more info on how to use it.`,
+      `\nCheck out the ${color.italic("README.md")} file inside ${
+        project.name
+      } for more info on how to use it.`,
     );
   }
 

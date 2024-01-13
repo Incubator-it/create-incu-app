@@ -8,6 +8,9 @@ import color from "picocolors";
 import prompts from "prompts";
 import yargs from "yargs";
 import { hideBin } from "yargs/helpers";
+import commons from "./utils/commons.mjs";
+
+const { templates } = commons;
 
 // Specify CLI arguments
 const args = yargs(hideBin(process.argv)).options({
@@ -27,13 +30,17 @@ const args = yargs(hideBin(process.argv)).options({
 prompts.override(args.argv);
 
 async function main() {
+  const {
+    _: [initialName, initialProject],
+  } = await args.argv;
+
   const project = await prompts(
     [
       {
         type: "text",
         name: "name",
-        message: "What is the name of your project?",
-        initial: "sarasa-project",
+        message: "What is the name of the project?",
+        initial: initialName || 'incu-app',
         validate: (value) => {
           if (value.match(/[^a-zA-Z0-9-_]+/g))
             return "Project name can only contain letters, numbers, dashes and underscores";
@@ -45,25 +52,8 @@ async function main() {
         type: "select",
         name: "template",
         message: `Which template would you like to use?`,
-        initial: 0,
-        choices: [
-          {
-            title: "React v18 + ChakraUI + MobX-State-Tree + Formik (with Vite)",
-            value: "react-chakra-mobx-formik"
-          },
-          {
-            title: "React v18 + Tailwind + ShadcnUI + MobX-State-Tree + Formik (with Vite)",
-            value: "react-tw-shadcn-mobx-formik"
-          },
-          {
-            title: "Next v13 + Tailwind + ShadcnUI + Formik (with app dir)",
-            value: "next-tw-shadcn-formik-app"
-          },
-          {
-            title: "React TS + Sass + Mui + Eslint + Prettier + Mobx + Apisauce + Vite",
-            value: "react-mui-eslint-pret-mobx-sauce"
-          }
-        ],
+        initial: initialProject || 0,
+        choices: templates,
       },
     ],
     {
@@ -83,7 +73,7 @@ async function main() {
   const destination = path.join(process.cwd(), project.name);
 
   // Copy files from the template folder to the current directory
-  await cp(template, destination, { recursive: true });
+  await cp(path.join(template, "project"), destination, { recursive: true });
 
   // Get all files from the destination folder
   const files = await glob(`**/*`, { nodir: true, cwd: destination, absolute: true });

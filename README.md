@@ -6,7 +6,7 @@ A CLI based on [create-appncy](https://github.com/goncy/create-appncy) for Incub
 
 - 🫡 Write `npx create-incu-app` in the terminal
 - 😉 If necessary, agree to install the package with `y` key
-- ✍️ Write the name of the project (`sarasa-project` by default)
+- ✍️ Write the name of the project (`incu-app` by default)
 - 📚 Choose the template to use
 - 🤝 Follow the instructions below and that's it!
 

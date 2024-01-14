@@ -63,7 +63,8 @@ View the example in \`src/store\` and \`src/components/DemoZustand.tsx\` to see 
     },
     {
       title: "MobX",
-      value: "mobx"
+      value: "mobx",
+      markdown: ``
     }
   ]
 };
@@ -129,13 +130,12 @@ async function main() {
   let extrasArr = [];
   if (extras2[project.template]) {
     const { extras: results } = await (0, import_prompts.default)({
-      type: "multiselect",
+      type: "select",
       name: "extras",
       message: "Which extras would you like to add?",
-      instructions: false,
       choices: extras2[project.template]
     });
-    extrasArr = results;
+    extrasArr.push(results);
     for await (const extra of extrasArr) {
       await (0, import_promises.cp)(import_node_path.default.join(template, "extras", extra), destination, { recursive: true });
     }

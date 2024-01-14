@@ -80,15 +80,14 @@ async function main() {
 
   if (extras[project.template]) {
     const {extras: results} = await prompts({
-      type: "multiselect",
+      type: "select",
       name: "extras",
       message: "Which extras would you like to add?",
-      instructions: false,
       choices: extras[project.template],
     });
 
     // Assign to variable
-    extrasArr = results;
+    extrasArr.push(results);
 
     for await (const extra of extrasArr) {
       // Copy files from the extra folder to the current directory
